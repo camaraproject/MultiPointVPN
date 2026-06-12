@@ -530,7 +530,7 @@ components:
               type: site
               primaryIP: 84.125.93.10
               secondaryIP: 84.125.94.10
-        resourceGroupId: 12121
+        resourceGroupId: '12121'
         cloudGatewayIP: 1.2.3.4
     siteToCloudVPNUpdateConnectionRequest:
       summary: Update Connection Sample 1
