@@ -69,7 +69,7 @@ The API definition(s) are based on
 
 ## multi-point-vpn 0.1.0-alpha.1
 
-**multi-point-vpn 0.1.0-alpha.1 is ...**
+**multi-point-vpn 0.1.0-alpha.1 is the first alpha version of the Multi-Point VPN API**
 
 - API definition **with inline documentation**:
   - [View it on ReDoc](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/camaraproject/MultiPointVPN/r1.1/code/API_definitions/multi-point-vpn.yaml&nocors)
