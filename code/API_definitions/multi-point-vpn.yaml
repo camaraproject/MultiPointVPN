@@ -367,6 +367,7 @@ components:
         address:
           type: string
           format: ipv4
+          description: ipv4 address
     Ipv6Address:
       type: object
       description: Ipv6 address details
@@ -380,6 +381,7 @@ components:
         address:
           type: string
           format: ipv6
+          description: ipv6 address
     Network:
       description: Base Network Entity structure
       type: object
