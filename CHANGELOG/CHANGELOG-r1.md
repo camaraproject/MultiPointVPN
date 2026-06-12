@@ -78,19 +78,19 @@ The API definition(s) are based on
 
 ### Added
 
-* _To be filled during release review_
+* First alpha version of new api multi-point-vpn
 
 ### Changed
 
-* _To be filled during release review_
+* N/A
 
 ### Fixed
 
-* _To be filled during release review_
+* N/A
 
 ### Removed
 
-* _To be filled during release review_
+* N/A
 
 **Full Changelog**: https://github.com/camaraproject/MultiPointVPN/commits/r1.1
 
