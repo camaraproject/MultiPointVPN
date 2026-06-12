@@ -24,16 +24,16 @@ info:
 
     NOTE- The private physical link between CE and cloud PE is default deployed for one click calling,
     otherwise it is required to install the physical link, which is out of the scope of this API.
-  version: wip
+  version: 0.1.0-alpha.1
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
-  x-camara-commonalities: 0.5
+  x-camara-commonalities: 0.6.1
 externalDocs:
   description: Project documentation at CAMARA
   url: 'https://github.com/camaraproject/MultiPointVPN'
 servers:
-  - url: '{apiRoot}/multi-point-vpn/vwip'
+  - url: '{apiRoot}/multi-point-vpn/v0.1alpha1'
     variables:
       apiRoot:
         default: 'http://localhost:9091'

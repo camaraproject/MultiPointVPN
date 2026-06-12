@@ -1,4 +1,4 @@
-Feature: CAMARA MultiPoint VPN API vwip
+Feature: CAMARA MultiPoint VPN API v0.1.0-alpha.1
 
   Background:
     Given an environment with CAMARA MultiPoint VPN API

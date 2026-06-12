@@ -1,0 +1,13 @@
+repository:
+  repository_name: MultiPointVPN
+  release_tag: r1.1
+  release_type: pre-release-alpha
+  release_date: null
+  src_commit_sha: 1a0177d647d7488d96808a0fee98af7f8aaa703a
+apis:
+- api_name: multi-point-vpn
+  api_version: 0.1.0-alpha.1
+  api_title: MultiPoint Virtual Private Network
+dependencies:
+  commonalities_release: r3.4 (0.6.1)
+  identity_consent_management_release: r3.3 (0.4.0)
