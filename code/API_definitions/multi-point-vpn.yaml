@@ -71,7 +71,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Connection"
+                $ref: "#/components/schemas/Network"
               examples:
                 SITE_TO_CLOUD_VPN_CREATE_CONNECTION_RESPONSE:
                   $ref: "#/components/examples/siteToCloudVPNCreateConnectionResponse"
@@ -111,7 +111,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Connection"
+                $ref: "#/components/schemas/Network"
               examples:
                 SITE_TO_CLOUD_VPN_CREATE_CONNECTION_RESPONSE:
                   $ref: "#/components/examples/siteToCloudVPNCreateConnectionResponse"
@@ -128,7 +128,7 @@ paths:
         - Network
       summary: retrieve multipoint virtual private network details
       description: Retrieve multipoint virtual private network details
-      operationId: getVPNConnect
+      operationId: getVpnConnection
       parameters:
         - $ref: "#/components/parameters/x-correlator"
         - $ref: '#/components/parameters/serviceId'
@@ -141,7 +141,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Connection"
+                $ref: "#/components/schemas/Network"
               examples:
                 SITE_TO_CLOUD_VPN_CREATE_CONNECTION_RESPONSE:
                   $ref: "#/components/examples/siteToCloudVPNCreateConnectionResponse"
@@ -259,6 +259,7 @@ components:
           description: Is Multipoint VPN protected
         connections:
           type: array
+          description: list of connections details for customer and provider
           items:
             $ref: '#/components/schemas/Connection'
         guaranteeBandwidth:
@@ -269,6 +270,7 @@ components:
           $ref: '#/components/schemas/Duration'
     AssessmentResult:
       type: object
+      description: Assessment Result
       properties:
         waitdays:
           type: integer
@@ -276,6 +278,7 @@ components:
           minimum: 1
         sla:
           type: string
+          description: Service Level Agreement between customer and provider
           enum:
             - A
             - AA
@@ -283,6 +286,7 @@ components:
         rent:
           $ref: '#/components/schemas/Amount'
     Connection:
+      description: Base Connection Entity structure
       allOf:
         - type: object
           description: Another Characteristic that is related to the current Characteristic;
@@ -341,17 +345,22 @@ components:
           description: connection location
     IpAddress:
       type: object
+      description: Ip address details      
       properties:
         addressType:
           type: string
+          description: address type, Ipv4 or Ipv6
       required:
         - addressType
       discriminator:
         propertyName: addressType
-        mappings:
-          - Ipv4Addr: '#/components/schemas/Ipv4Address'
-          - Ipv6Addr: '#/components/schemas/Ipv6Address'
+        mapping:
+          Ipv4Addr: 
+            $ref: '#/components/schemas/Ipv4Address'
+          Ipv6Addr:
+            $ref: '#/components/schemas/Ipv6Address'
     Ipv4Address:
+      description: Ipv4 address details
       allOf:
         - $ref: '#/components/schemas/IpAddress'
         - type: object
@@ -362,6 +371,7 @@ components:
               type: string
               format: ipv4
     Ipv6Address:
+      description: Ipv6 address details
       allOf:
         - $ref: '#/components/schemas/IpAddress'
         - type: object
@@ -386,10 +396,12 @@ components:
           description: Is Multipoint VPN protected
         connections:
           type: array
+          description: list of connections details for customer and provider
           items:
             $ref: '#/components/schemas/Connection'
         sla:
           type: string
+          description: Service Level Agreement between customer and provider
           enum:
             - A
             - AA
@@ -402,10 +414,13 @@ components:
           $ref: '#/components/schemas/Duration'
         routeProtocal:
           type: string
+          description: Routing Protocol used for this network
         resourceGroupId:
           type: string
+          description: Resource Group Id
         cloudGatewayIP:
           type: string
+          description: Cloud Gateway IP
     NetworkCreate:
       description: Base Connection Entity structure
       type: object
@@ -418,6 +433,7 @@ components:
           description: Is Multipoint VPN protected
         connections:
           type: array
+          description: list of connections details for customer and provider
           items:
             $ref: '#/components/schemas/Connection'
         guaranteeBandwidth:
@@ -426,6 +442,7 @@ components:
           minimum: 1
         sla:
           type: string
+          description: Service Level Agreement between customer and provider
           enum:
             - A
             - AA
@@ -434,6 +451,7 @@ components:
           $ref: '#/components/schemas/Duration'
         routeProtocal:
           type: string
+          description: Routing Protocol used for this network
     NetworkUpdate:
       description: Base Connection Entity structure
       type: object
@@ -443,6 +461,7 @@ components:
           description: Guarantee Bandwidth (Mps)
         sla:
           type: string
+          description: Service Level Agreement between customer and provider
           enum:
             - A
             - AA
