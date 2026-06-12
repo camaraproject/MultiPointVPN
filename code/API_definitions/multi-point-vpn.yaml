@@ -346,39 +346,40 @@ components:
     IpAddress:
       type: object
       description: Ip address details
-      properties:
-        addressType:
-          type: string
-          description: address type, Ipv4 or Ipv6
-      required:
-        - addressType
+      oneOf:
+        - $ref: '#/components/schemas/Ipv4Address'
+        - $ref: '#/components/schemas/Ipv6Address'
       discriminator:
         propertyName: addressType
         mapping:
           Ipv4Addr: '#/components/schemas/Ipv4Address'
           Ipv6Addr: '#/components/schemas/Ipv6Address'
     Ipv4Address:
+      type: object
       description: Ipv4 address details
-      allOf:
-        - $ref: '#/components/schemas/IpAddress'
-        - type: object
-          required:
-            - address
-          properties:
-            address:
-              type: string
-              format: ipv4
+      required:
+        - addressType
+        - address
+      properties:
+        addressType:
+          type: string
+          description: address type, Ipv4 or Ipv6
+        address:
+          type: string
+          format: ipv4
     Ipv6Address:
+      type: object
       description: Ipv6 address details
-      allOf:
-        - $ref: '#/components/schemas/IpAddress'
-        - type: object
-          required:
-            - address
-          properties:
-            address:
-              type: string
-              format: ipv6
+      required:
+        - addressType
+        - address
+      properties:
+        addressType:
+          type: string
+          description: address type, Ipv4 or Ipv6
+        address:
+          type: string
+          format: ipv6
     Network:
       description: Base Network Entity structure
       type: object
