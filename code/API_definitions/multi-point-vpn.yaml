@@ -42,7 +42,7 @@ info:
     - `multi-point-vpn:network:delete` - Delete a multipoint VPN network
 
     - `multi-point-vpn:assessment:assess` - Assess multipoint VPN connection feasibility
-  version: 0.1.0-alpha.1
+  version: wip
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
@@ -51,7 +51,7 @@ externalDocs:
   description: Product documentation at CAMARA
   url: 'https://github.com/camaraproject/MultiPointVPN'
 servers:
-  - url: '{apiRoot}/multi-point-vpn/v0.1alpha1'
+  - url: '{apiRoot}/multi-point-vpn/vwip'
     variables:
       apiRoot:
         default: 'http://localhost:9091'
@@ -257,6 +257,7 @@ paths:
 components:
   securitySchemes:
     openId:
+      description: OpenIdConnect security scheme
       type: openIdConnect
       openIdConnectUrl: https://example.com/.well-known/openid-configuration
   headers:
