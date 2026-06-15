@@ -24,16 +24,34 @@ info:
 
     NOTE- The private physical link between CE and cloud PE is default deployed for one click calling,
     otherwise it is required to install the physical link, which is out of the scope of this API.
-  version: wip
+
+    # Authorization and authentication
+
+    The "Camara Security and Interoperability Profile" provides details on how a CAMARA API consumer
+    can access an API. An access token is required to invoke this API, provided as a Bearer token
+    in the `Authorization` header.
+
+    Scopes defined for this API:
+
+    - `multi-point-vpn:network:create` - Create a multipoint VPN network
+
+    - `multi-point-vpn:network:read` - Retrieve multipoint VPN network details
+
+    - `multi-point-vpn:network:update` - Update a multipoint VPN network
+
+    - `multi-point-vpn:network:delete` - Delete a multipoint VPN network
+
+    - `multi-point-vpn:assessment:assess` - Assess multipoint VPN connection feasibility
+  version: 0.1.0-alpha.1
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
   x-camara-commonalities: 0.5
 externalDocs:
-  description: Project documentation at CAMARA
+  description: Product documentation at CAMARA
   url: 'https://github.com/camaraproject/MultiPointVPN'
 servers:
-  - url: '{apiRoot}/multi-point-vpn/vwip'
+  - url: '{apiRoot}/multi-point-vpn/v0.1alpha1'
     variables:
       apiRoot:
         default: 'http://localhost:9091'
@@ -44,13 +62,16 @@ tags:
   - name: Network
     description: Operations to manage Multipoint VPN connection
 paths:
-  /network:
+  /networks:
     post:
       tags:
         - Network
       summary: To create a multipoint virtual private network
       description: Create a multipoint virtual private network
       operationId: createNetwork
+      security:
+        - openId:
+            - multi-point-vpn:network:create
       parameters:
         - $ref: "#/components/parameters/x-correlator"
       requestBody:
@@ -83,13 +104,16 @@ paths:
           $ref: "#/components/responses/Generic403"
         "500":
           $ref: "#/components/responses/Generic500"
-  /network/{serviceId}:
+  /networks/{serviceId}:
     patch:
       tags:
         - Network
       summary: To update a multipoint virtual private network
       description: Update a new multipoint virtual private network
       operationId: updateNetwork
+      security:
+        - openId:
+            - multi-point-vpn:network:update
       parameters:
         - $ref: "#/components/parameters/x-correlator"
         - $ref: '#/components/parameters/serviceId'
@@ -121,6 +145,8 @@ paths:
           $ref: "#/components/responses/Generic401"
         "403":
           $ref: "#/components/responses/Generic403"
+        "404":
+          $ref: "#/components/responses/Generic404"
         "500":
           $ref: "#/components/responses/Generic500"
     get:
@@ -129,6 +155,9 @@ paths:
       summary: retrieve multipoint virtual private network details
       description: Retrieve multipoint virtual private network details
       operationId: getVpnConnection
+      security:
+        - openId:
+            - multi-point-vpn:network:read
       parameters:
         - $ref: "#/components/parameters/x-correlator"
         - $ref: '#/components/parameters/serviceId'
@@ -151,6 +180,8 @@ paths:
           $ref: "#/components/responses/Generic401"
         "403":
           $ref: "#/components/responses/Generic403"
+        "404":
+          $ref: "#/components/responses/Generic404"
         "500":
           $ref: "#/components/responses/Generic500"
     delete:
@@ -159,6 +190,9 @@ paths:
       summary: Delete multipoint virtual private network
       description: Delete multipoint virtual private network
       operationId: deleteNetwork
+      security:
+        - openId:
+            - multi-point-vpn:network:delete
       parameters:
         - $ref: "#/components/parameters/x-correlator"
         - $ref: '#/components/parameters/serviceId'
@@ -174,6 +208,8 @@ paths:
           $ref: "#/components/responses/Generic401"
         "403":
           $ref: "#/components/responses/Generic403"
+        "404":
+          $ref: "#/components/responses/Generic404"
         "500":
           $ref: "#/components/responses/Generic500"
   /assessment:
@@ -183,6 +219,9 @@ paths:
       summary: Assess Multipoint VPN connection feasibility
       description: Get the feasibility assessment for a Multipoint VPN connection
       operationId: assessConnectionFeasibility
+      security:
+        - openId:
+            - multi-point-vpn:assessment:assess
       parameters:
         - $ref: "#/components/parameters/x-correlator"
       requestBody:
@@ -216,12 +255,16 @@ paths:
         "500":
           $ref: "#/components/responses/Generic500"
 components:
+  securitySchemes:
+    openId:
+      type: openIdConnect
+      openIdConnectUrl: https://example.com/.well-known/openid-configuration
   headers:
     x-correlator:
       description: Correlation id for the different services
       schema:
         type: string
-        pattern: ^[a-zA-Z0-9-]{0,55}$
+        pattern: ^[a-zA-Z0-9-_:;.\/<>{}]{0,256}$
   parameters:
     x-correlator:
       name: x-correlator
@@ -229,7 +272,7 @@ components:
       description: Correlation id for the different services
       schema:
         type: string
-        pattern: ^[a-zA-Z0-9-]{0,55}$
+        pattern: ^[a-zA-Z0-9-_:;.\/<>{}]{0,256}$
     serviceId:
       name: serviceId
       required: true
@@ -249,7 +292,7 @@ components:
           description: Numeric value in a given unit
         currency:
           type: string
-          description: currency
+          description: Currency code (ISO 4217 format, e.g., GBP, USD, EUR)
     AssessmentRequest:
       description: Base schema for all areas
       type: object
@@ -287,17 +330,15 @@ components:
           $ref: '#/components/schemas/Amount'
     Connection:
       description: Base Connection Entity structure
-      allOf:
-        - type: object
-          description: Another Characteristic that is related to the current Characteristic;
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the connection
-            customerEdge:
-              $ref: '#/components/schemas/EdgeConnection'
-            providerEdge:
-              $ref: '#/components/schemas/EdgeConnection'
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the connection
+        customerEdge:
+          $ref: '#/components/schemas/EdgeConnection'
+        providerEdge:
+          $ref: '#/components/schemas/EdgeConnection'
     Duration:
       type: object
       description: Guarantee duration
@@ -309,7 +350,7 @@ components:
           description: Numeric value in a given unit
         unit:
           type: string
-          description: unit
+          description: Time unit for the duration value (e.g., hours, days, months)
     ErrorInfo:
       description: Common schema for errors
       type: object
@@ -332,14 +373,19 @@ components:
       type: object
       properties:
         type:
+          type: string
           description: Multipoint VPN access point type
           enum:
             - site
             - cloud
         primaryIpAddress:
-          $ref: '#/components/schemas/IpAddress'
+          allOf:
+            - $ref: '#/components/schemas/IpAddress'
+          description: Primary IP address of the edge connection
         secondaryIpAddress:
-          $ref: '#/components/schemas/IpAddress'
+          allOf:
+            - $ref: '#/components/schemas/IpAddress'
+          description: Secondary (backup) IP address of the edge connection
         location:
           type: string
           description: connection location
@@ -363,7 +409,9 @@ components:
       properties:
         addressType:
           type: string
-          description: address type, Ipv4 or Ipv6
+          enum:
+            - Ipv4Addr
+          description: address type
         address:
           type: string
           format: ipv4
@@ -377,7 +425,9 @@ components:
       properties:
         addressType:
           type: string
-          description: address type, Ipv4 or Ipv6
+          enum:
+            - Ipv6Addr
+          description: address type
         address:
           type: string
           format: ipv6
@@ -413,7 +463,7 @@ components:
           minimum: 1
         duration:
           $ref: '#/components/schemas/Duration'
-        routeProtocal:
+        routeProtocol:
           type: string
           description: Routing Protocol used for this network
         resourceGroupId:
@@ -450,7 +500,7 @@ components:
             - AAA
         duration:
           $ref: '#/components/schemas/Duration'
-        routeProtocal:
+        routeProtocol:
           type: string
           description: Routing Protocol used for this network
     NetworkUpdate:
@@ -470,27 +520,35 @@ components:
 
   examples:
     siteToCloudVPNFeasibilityAssessmentRequest:
-      summary: Assesment Sample 1
+      summary: Assessment Sample 1
       description: Feasibility assessment sample
       value:
         isProtected: true
         connections:
           - customerEdge:
               type: site
-              primaryIP: 84.125.93.10
-              secondaryIP: 84.125.94.10
+              primaryIpAddress:
+                addressType: Ipv4Addr
+                address: 84.125.93.10
+              secondaryIpAddress:
+                addressType: Ipv4Addr
+                address: 84.125.94.10
               location: string
             providerEdge:
               type: site
-              primaryIP: 84.125.93.10
-              secondaryIP: 84.125.94.10
+              primaryIpAddress:
+                addressType: Ipv4Addr
+                address: 84.125.93.10
+              secondaryIpAddress:
+                addressType: Ipv4Addr
+                address: 84.125.94.10
         guaranteeBandwidth: 20
         duration:
           value: 6
           unit: days
 
     siteToCloudVPNFeasibilityAssessmentResponse:
-      summary: Assesment Sample 1
+      summary: Assessment Sample 1
       description: Feasibility assessment sample
       value:
         waitdays: 1
@@ -506,40 +564,55 @@ components:
         connections:
           - customerEdge:
               type: site
-              primaryIP: 84.125.93.10
-              secondaryIP: 84.125.94.10
+              primaryIpAddress:
+                addressType: Ipv4Addr
+                address: 84.125.93.10
+              secondaryIpAddress:
+                addressType: Ipv4Addr
+                address: 84.125.94.10
               location: string
             providerEdge:
               type: site
-              primaryIP: 84.125.93.10
-              secondaryIP: 84.125.94.10
+              primaryIpAddress:
+                addressType: Ipv4Addr
+                address: 84.125.93.10
+              secondaryIpAddress:
+                addressType: Ipv4Addr
+                address: 84.125.94.10
         guaranteeBandwidth: 20
         duration:
           value: 6
           unit: days
 
     siteToCloudVPNCreateConnectionResponse:
-      summary: Create Connection Sampl 1
+      summary: Create Connection Sample 1
       description: Create Connection response sample
       value:
         serviceId: '111111'
         connections:
           - customerEdge:
               type: site
-              primaryIP: 84.125.93.10
-              secondaryIP: 84.125.94.10
+              primaryIpAddress:
+                addressType: Ipv4Addr
+                address: 84.125.93.10
+              secondaryIpAddress:
+                addressType: Ipv4Addr
+                address: 84.125.94.10
               location: string
             providerEdge:
               type: site
-              primaryIP: 84.125.93.10
-              secondaryIP: 84.125.94.10
+              primaryIpAddress:
+                addressType: Ipv4Addr
+                address: 84.125.93.10
+              secondaryIpAddress:
+                addressType: Ipv4Addr
+                address: 84.125.94.10
         resourceGroupId: '12121'
         cloudGatewayIP: 1.2.3.4
     siteToCloudVPNUpdateConnectionRequest:
       summary: Update Connection Sample 1
       description: Update Connection request sample
       value:
-        serviceId: 111111
         guaranteeBandwidth: 10
         sla: A
   responses:
@@ -627,8 +700,33 @@ components:
                 status: 403
                 code: PERMISSION_DENIED
                 message: Client does not have sufficient permissions to perform this action.
+    Generic404:
+      description: Not Found
+      headers:
+        x-correlator:
+          $ref: "#/components/headers/x-correlator"
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/ErrorInfo"
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 404
+                  code:
+                    enum:
+                      - NOT_FOUND
+          examples:
+            GENERIC_404_NOT_FOUND:
+              description: Resource not found
+              value:
+                status: 404
+                code: NOT_FOUND
+                message: The specified resource was not found.
     Generic500:
-      description: Forbidden
+      description: Internal Server Error
       headers:
         x-correlator:
           $ref: "#/components/headers/x-correlator"
@@ -644,11 +742,11 @@ components:
                       - 500
                   code:
                     enum:
-                      - INTERNAL_SERVER_ERROR
+                      - INTERNAL
           examples:
-            GENERIC_500_INTERNAL_SERVER_ERROR:
+            GENERIC_500_INTERNAL:
               description: Internal server error
               value:
                 status: 500
-                code: INTERNAL_SERVER_ERROR
+                code: INTERNAL
                 message: Internal server error while processing request.
