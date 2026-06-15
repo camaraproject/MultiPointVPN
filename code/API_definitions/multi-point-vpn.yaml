@@ -35,7 +35,6 @@ info:
     - `multi-point-vpn:assessment:assess` - Assess multipoint VPN connection feasibility
 
     <!-- CAMARA:MANDATORY:authorization-and-authentication:BEGIN -->
-    
     # Authorization and authentication
 
     The "Camara Security and Interoperability Profile" provides details of how an API consumer requests an access token. Please refer to Identity and Consent Management (https://github.com/camaraproject/IdentityAndConsentManagement/) for the released version of the profile.
@@ -46,7 +45,6 @@ info:
     <!-- CAMARA:MANDATORY:authorization-and-authentication:END -->
 
     <!-- CAMARA:MANDATORY:additional-error-responses:BEGIN -->
-    
     # Additional CAMARA error responses
 
     The list of error codes in this API specification is not exhaustive. Therefore the API specification MAY not document some non-mandatory error statuses as indicated in `CAMARA API Design Guide`.
@@ -572,6 +570,7 @@ components:
             - AAA
     XCorrelator:
       type: string
+      description: Correlation id for the different services
       maxLength: 256
       pattern: ^[a-zA-Z0-9-_:;.\/<>{}]{0,256}$
       example: "b4333c46-49c0-4f62-80d7-f0ef930f1c46"
