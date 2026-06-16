@@ -111,6 +111,7 @@ paths:
               schema:
                 type: string
                 format: uri
+                maxLength: 2048
           content:
             application/json:
               schema:
@@ -302,6 +303,7 @@ components:
       schema:
         type: string
         maxLength: 255
+        pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
       in: path
       description: Identifier of the Resource
   schemas:
@@ -366,6 +368,7 @@ components:
         id:
           type: string
           maxLength: 255
+          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
           description: Unique identifier for the connection
         customerEdge:
           $ref: '#/components/schemas/EdgeConnection'
@@ -433,6 +436,7 @@ components:
         location:
           type: string
           maxLength: 2048
+          format: uri
           description: connection location
     IpAddress:
       type: object
@@ -486,10 +490,12 @@ components:
         serviceId:
           type: string
           maxLength: 255
+          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
           description: unique id for network service
         serviceName:
           type: string
           maxLength: 255
+          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
           description: vpn service name
         isProtected:
           type: boolean
@@ -518,10 +524,12 @@ components:
         routeProtocol:
           type: string
           maxLength: 255
+          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
           description: Routing Protocol used for this network
         resourceGroupId:
           type: string
           maxLength: 255
+          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
           description: Resource Group Id
         cloudGatewayIp:
           type: string
@@ -534,6 +542,7 @@ components:
         serviceName:
           type: string
           maxLength: 255
+          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
           description: vpn service name
         isProtected:
           type: boolean
@@ -562,6 +571,7 @@ components:
         routeProtocol:
           type: string
           maxLength: 255
+          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
           description: Routing Protocol used for this network
     NetworkUpdate:
       description: Base Network Entity structure for update
