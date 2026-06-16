@@ -20,7 +20,7 @@ info:
 
     * Physical Location Physical location of the Customer Edge Router.
 
-    NOTE- The private physical link between CE and cloud PE is default deployed for one click calling, otherwise it is required to install the physical link, which is out of the scope of this API.
+    NOTE: The private physical link between CE and cloud PE is default deployed for one click calling, otherwise it is required to install the physical link, which is out of the scope of this API.
 
     # Available scopes
 
@@ -106,6 +106,12 @@ paths:
           headers:
             x-correlator:
               $ref: "#/components/headers/x-correlator"
+            Location:
+              description: URL of the newly created network resource
+              schema:
+                type: string
+                pattern: '^[A-Za-z0-9\\-_.]{1,2048}$'
+                maxLength: 2048
           content:
             application/json:
               schema:
@@ -126,7 +132,7 @@ paths:
       tags:
         - Network
       summary: To update a multipoint virtual private network
-      description: Update a new multipoint virtual private network
+      description: Update a multipoint virtual private network
       operationId: updateNetwork
       security:
         - openId:
@@ -137,7 +143,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          application/merge-patch+json:
             schema:
               $ref: "#/components/schemas/NetworkUpdate"
             examples:
@@ -171,7 +177,7 @@ paths:
         - Network
       summary: retrieve multipoint virtual private network details
       description: Retrieve multipoint virtual private network details
-      operationId: getVpnConnection
+      operationId: getNetwork
       security:
         - openId:
             - multi-point-vpn:network:read
@@ -215,7 +221,7 @@ paths:
         - $ref: '#/components/parameters/serviceId'
       responses:
         "202":
-          description: deleteVPNConnectionResponse
+          description: Network deletion request accepted. The deletion is processed asynchronously; the resource will be removed once complete.
           headers:
             x-correlator:
               $ref: "#/components/headers/x-correlator"
@@ -297,6 +303,7 @@ components:
       schema:
         type: string
         maxLength: 255
+        pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
       in: path
       description: Identifier of the Resource
   schemas:
@@ -313,6 +320,7 @@ components:
           type: string
           maxLength: 3
           description: Currency code (ISO 4217 format, e.g., GBP, USD, EUR)
+          pattern: '^[A-Z]{3}$'
     AssessmentRequest:
       description: Base schema for all areas
       type: object
@@ -329,7 +337,7 @@ components:
         guaranteeBandwidth:
           type: integer
           format: int32
-          description: Guarantee Bandwidth (Mps)
+          description: Guarantee Bandwidth (Mbps)
           minimum: 1
           maximum: 1000000
         duration:
@@ -338,7 +346,7 @@ components:
       type: object
       description: Assessment Result
       properties:
-        waitdays:
+        waitDays:
           type: integer
           format: int32
           description: the waiting-days until the vpn can be offered
@@ -360,6 +368,7 @@ components:
         id:
           type: string
           maxLength: 255
+          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
           description: Unique identifier for the connection
         customerEdge:
           $ref: '#/components/schemas/EdgeConnection'
@@ -377,7 +386,13 @@ components:
         unit:
           type: string
           maxLength: 20
-          description: Time unit for the duration value (e.g., hours, days, months)
+          description: Time unit for the duration value
+          enum:
+            - minutes
+            - hours
+            - days
+            - months
+            - years
     ErrorInfo:
       description: Common schema for errors
       type: object
@@ -421,6 +436,7 @@ components:
         location:
           type: string
           maxLength: 2048
+          pattern: '^[A-Za-z0-9\\-_.]{1,2048}$'
           description: connection location
     IpAddress:
       type: object
@@ -474,10 +490,12 @@ components:
         serviceId:
           type: string
           maxLength: 255
+          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
           description: unique id for network service
         serviceName:
           type: string
           maxLength: 255
+          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
           description: vpn service name
         isProtected:
           type: boolean
@@ -498,7 +516,7 @@ components:
         guaranteeBandwidth:
           type: integer
           format: int32
-          description: Guarantee Bandwidth (Mps)
+          description: Guarantee Bandwidth (Mbps)
           minimum: 1
           maximum: 1000000
         duration:
@@ -506,22 +524,26 @@ components:
         routeProtocol:
           type: string
           maxLength: 255
+          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
           description: Routing Protocol used for this network
         resourceGroupId:
           type: string
           maxLength: 255
+          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
           description: Resource Group Id
-        cloudGatewayIP:
+        cloudGatewayIp:
           type: string
           maxLength: 45
+          format: ip
           description: Cloud Gateway IP
     NetworkCreate:
-      description: Base Connection Entity structure
+      description: Base Network Entity structure for creation
       type: object
       properties:
         serviceName:
           type: string
           maxLength: 255
+          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
           description: vpn service name
         isProtected:
           type: boolean
@@ -535,7 +557,7 @@ components:
         guaranteeBandwidth:
           type: integer
           format: int32
-          description: Guarantee Bandwidth (Mps)
+          description: Guarantee Bandwidth (Mbps)
           minimum: 1
           maximum: 1000000
         sla:
@@ -550,15 +572,16 @@ components:
         routeProtocol:
           type: string
           maxLength: 255
+          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
           description: Routing Protocol used for this network
     NetworkUpdate:
-      description: Base Connection Entity structure
+      description: Base Network Entity structure for update
       type: object
       properties:
         guaranteeBandwidth:
           type: integer
           format: int32
-          description: Guarantee Bandwidth (Mps)
+          description: Guarantee Bandwidth (Mbps)
           minimum: 1
           maximum: 1000000
         sla:
@@ -607,7 +630,7 @@ components:
       summary: Assessment Sample 1
       description: Feasibility assessment sample
       value:
-        waitdays: 1
+        waitDays: 1
         sla: A
         rent:
           amount: 2000
@@ -664,7 +687,7 @@ components:
                 addressType: Ipv4Addr
                 address: 84.125.94.10
         resourceGroupId: '12121'
-        cloudGatewayIP: 1.2.3.4
+        cloudGatewayIp: 1.2.3.4
     siteToCloudVPNUpdateConnectionRequest:
       summary: Update Connection Sample 1
       description: Update Connection request sample
