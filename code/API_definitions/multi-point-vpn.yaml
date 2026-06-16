@@ -110,7 +110,7 @@ paths:
               description: URL of the newly created network resource
               schema:
                 type: string
-                format: uri
+                pattern: '^[A-Za-z0-9\\-_.]{1,2048}$'
                 maxLength: 2048
           content:
             application/json:
@@ -436,7 +436,7 @@ components:
         location:
           type: string
           maxLength: 2048
-          format: uri
+          pattern: '^[A-Za-z0-9\\-_.]{1,2048}$'
           description: connection location
     IpAddress:
       type: object
@@ -534,6 +534,7 @@ components:
         cloudGatewayIp:
           type: string
           maxLength: 45
+          format: ip
           description: Cloud Gateway IP
     NetworkCreate:
       description: Base Network Entity structure for creation
