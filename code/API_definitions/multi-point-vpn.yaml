@@ -59,25 +59,25 @@ info:
 
     This API rejects requests with JSON request bodies that contain properties not declared in this specification, at any nesting level. Unknown properties result in a `400 INVALID_ARGUMENT` response.
     <!-- CAMARA:MANDATORY:request-body-strictness:END -->
-  version: wip
+  version: 0.1.0-alpha.1
   license:
     name: Apache 2.0
-    url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
   x-camara-commonalities: 0.8.0
-externalDocs:
-  description: Product documentation at CAMARA
-  url: 'https://github.com/camaraproject/MultiPointVPN'
 servers:
-  - url: '{apiRoot}/multi-point-vpn/vwip'
+  - url: '{apiRoot}/multi-point-vpn/v0.1alpha1'
     variables:
       apiRoot:
-        default: 'http://localhost:9091'
+        default: http://localhost:9091
         description: API root, defined by the service provider, e.g. `api.example.com` or `api.example.com/somepath`
 tags:
   - name: Network Assessment
     description: Operations to manage Multipoint VPN connection assessments
   - name: Network
     description: Operations to manage Multipoint VPN connection
+externalDocs:
+  description: Product documentation at CAMARA
+  url: https://github.com/camaraproject/MultiPointVPN
 paths:
   /networks:
     post:
@@ -90,43 +90,43 @@ paths:
         - openId:
             - multi-point-vpn:network:create
       parameters:
-        - $ref: "#/components/parameters/x-correlator"
+        - $ref: '#/components/parameters/x-correlator'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/NetworkCreate"
+              $ref: '#/components/schemas/NetworkCreate'
             examples:
               SITE_TO_CLOUD_VPN_CREATE_CONNECTION:
-                $ref: "#/components/examples/siteToCloudVPNCreateConnectionRequest"
+                $ref: '#/components/examples/siteToCloudVPNCreateConnectionRequest'
       responses:
-        "201":
+        '201':
           description: CreateVPNConnectionResponse
           headers:
             x-correlator:
-              $ref: "#/components/headers/x-correlator"
+              $ref: '#/components/headers/x-correlator'
             Location:
               description: URL of the newly created network resource
               schema:
                 type: string
-                pattern: '^[A-Za-z0-9\\-_.]{1,2048}$'
+                pattern: ^[A-Za-z0-9\\-_.]{1,2048}$
                 maxLength: 2048
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Network"
+                $ref: '#/components/schemas/Network'
               examples:
                 SITE_TO_CLOUD_VPN_CREATE_CONNECTION_RESPONSE:
-                  $ref: "#/components/examples/siteToCloudVPNCreateConnectionResponse"
-        "400":
-          $ref: "#/components/responses/Generic400"
-        "401":
-          $ref: "#/components/responses/Generic401"
-        "403":
-          $ref: "#/components/responses/Generic403"
-        "500":
-          $ref: "#/components/responses/Generic500"
+                  $ref: '#/components/examples/siteToCloudVPNCreateConnectionResponse'
+        '400':
+          $ref: '#/components/responses/Generic400'
+        '401':
+          $ref: '#/components/responses/Generic401'
+        '403':
+          $ref: '#/components/responses/Generic403'
+        '500':
+          $ref: '#/components/responses/Generic500'
   /networks/{serviceId}:
     patch:
       tags:
@@ -138,40 +138,40 @@ paths:
         - openId:
             - multi-point-vpn:network:update
       parameters:
-        - $ref: "#/components/parameters/x-correlator"
+        - $ref: '#/components/parameters/x-correlator'
         - $ref: '#/components/parameters/serviceId'
       requestBody:
         required: true
         content:
           application/merge-patch+json:
             schema:
-              $ref: "#/components/schemas/NetworkUpdate"
+              $ref: '#/components/schemas/NetworkUpdate'
             examples:
               SITE_TO_CLOUD_VPN_UPDATE_CONNECTION:
-                $ref: "#/components/examples/siteToCloudVPNUpdateConnectionRequest"
+                $ref: '#/components/examples/siteToCloudVPNUpdateConnectionRequest'
       responses:
-        "200":
+        '200':
           description: UpdateVPNConnectionResponse
           headers:
             x-correlator:
-              $ref: "#/components/headers/x-correlator"
+              $ref: '#/components/headers/x-correlator'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Network"
+                $ref: '#/components/schemas/Network'
               examples:
                 SITE_TO_CLOUD_VPN_CREATE_CONNECTION_RESPONSE:
-                  $ref: "#/components/examples/siteToCloudVPNCreateConnectionResponse"
-        "400":
-          $ref: "#/components/responses/Generic400"
-        "401":
-          $ref: "#/components/responses/Generic401"
-        "403":
-          $ref: "#/components/responses/Generic403"
-        "404":
-          $ref: "#/components/responses/Generic404"
-        "500":
-          $ref: "#/components/responses/Generic500"
+                  $ref: '#/components/examples/siteToCloudVPNCreateConnectionResponse'
+        '400':
+          $ref: '#/components/responses/Generic400'
+        '401':
+          $ref: '#/components/responses/Generic401'
+        '403':
+          $ref: '#/components/responses/Generic403'
+        '404':
+          $ref: '#/components/responses/Generic404'
+        '500':
+          $ref: '#/components/responses/Generic500'
     get:
       tags:
         - Network
@@ -182,31 +182,31 @@ paths:
         - openId:
             - multi-point-vpn:network:read
       parameters:
-        - $ref: "#/components/parameters/x-correlator"
+        - $ref: '#/components/parameters/x-correlator'
         - $ref: '#/components/parameters/serviceId'
       responses:
-        "200":
+        '200':
           description: getNetworkDetails
           headers:
             x-correlator:
-              $ref: "#/components/headers/x-correlator"
+              $ref: '#/components/headers/x-correlator'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Network"
+                $ref: '#/components/schemas/Network'
               examples:
                 SITE_TO_CLOUD_VPN_CREATE_CONNECTION_RESPONSE:
-                  $ref: "#/components/examples/siteToCloudVPNCreateConnectionResponse"
-        "400":
-          $ref: "#/components/responses/Generic400"
-        "401":
-          $ref: "#/components/responses/Generic401"
-        "403":
-          $ref: "#/components/responses/Generic403"
-        "404":
-          $ref: "#/components/responses/Generic404"
-        "500":
-          $ref: "#/components/responses/Generic500"
+                  $ref: '#/components/examples/siteToCloudVPNCreateConnectionResponse'
+        '400':
+          $ref: '#/components/responses/Generic400'
+        '401':
+          $ref: '#/components/responses/Generic401'
+        '403':
+          $ref: '#/components/responses/Generic403'
+        '404':
+          $ref: '#/components/responses/Generic404'
+        '500':
+          $ref: '#/components/responses/Generic500'
     delete:
       tags:
         - Network
@@ -217,24 +217,24 @@ paths:
         - openId:
             - multi-point-vpn:network:delete
       parameters:
-        - $ref: "#/components/parameters/x-correlator"
+        - $ref: '#/components/parameters/x-correlator'
         - $ref: '#/components/parameters/serviceId'
       responses:
-        "202":
+        '202':
           description: Network deletion request accepted. The deletion is processed asynchronously; the resource will be removed once complete.
           headers:
             x-correlator:
-              $ref: "#/components/headers/x-correlator"
-        "400":
-          $ref: "#/components/responses/Generic400"
-        "401":
-          $ref: "#/components/responses/Generic401"
-        "403":
-          $ref: "#/components/responses/Generic403"
-        "404":
-          $ref: "#/components/responses/Generic404"
-        "500":
-          $ref: "#/components/responses/Generic500"
+              $ref: '#/components/headers/x-correlator'
+        '400':
+          $ref: '#/components/responses/Generic400'
+        '401':
+          $ref: '#/components/responses/Generic401'
+        '403':
+          $ref: '#/components/responses/Generic403'
+        '404':
+          $ref: '#/components/responses/Generic404'
+        '500':
+          $ref: '#/components/responses/Generic500'
   /assessment:
     post:
       tags:
@@ -246,54 +246,62 @@ paths:
         - openId:
             - multi-point-vpn:assessment:assess
       parameters:
-        - $ref: "#/components/parameters/x-correlator"
+        - $ref: '#/components/parameters/x-correlator'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AssessmentRequest"
+              $ref: '#/components/schemas/AssessmentRequest'
             examples:
               SITE_TO_CLOUD_VPN_ASSESSMENT:
-                $ref: "#/components/examples/siteToCloudVPNFeasibilityAssessmentRequest"
+                $ref: '#/components/examples/siteToCloudVPNFeasibilityAssessmentRequest'
       responses:
-        "200":
+        '200':
           description: Assessment result
           headers:
             x-correlator:
-              $ref: "#/components/headers/x-correlator"
+              $ref: '#/components/headers/x-correlator'
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AssessmentResult"
+                $ref: '#/components/schemas/AssessmentResult'
               examples:
                 SITE_TO_CLOUD_VPN_ASSESSMENT_RESULT:
-                  $ref: "#/components/examples/siteToCloudVPNFeasibilityAssessmentResponse"
-        "400":
-          $ref: "#/components/responses/Generic400"
-        "401":
-          $ref: "#/components/responses/Generic401"
-        "403":
-          $ref: "#/components/responses/Generic403"
-        "500":
-          $ref: "#/components/responses/Generic500"
+                  $ref: '#/components/examples/siteToCloudVPNFeasibilityAssessmentResponse'
+        '400':
+          $ref: '#/components/responses/Generic400'
+        '401':
+          $ref: '#/components/responses/Generic401'
+        '403':
+          $ref: '#/components/responses/Generic403'
+        '500':
+          $ref: '#/components/responses/Generic500'
 components:
   securitySchemes:
     openId:
-      $ref: "../common/CAMARA_common.yaml#/components/securitySchemes/openId"
+      type: openIdConnect
+      openIdConnectUrl: https://example.com/.well-known/openid-configuration
+      description: OpenID Connect authentication via discovery metadata.
   headers:
     x-correlator:
-      $ref: "../common/CAMARA_common.yaml#/components/headers/x-correlator"
+      description: Correlation id for the different services
+      schema:
+        $ref: '#/components/schemas/XCorrelator'
   parameters:
     x-correlator:
-      $ref: "../common/CAMARA_common.yaml#/components/parameters/x-correlator"
+      name: x-correlator
+      in: header
+      description: Correlation id for the different services
+      schema:
+        $ref: '#/components/schemas/XCorrelator'
     serviceId:
       name: serviceId
       required: true
       schema:
         type: string
         maxLength: 255
-        pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
+        pattern: ^[A-Za-z0-9\\-_.]{1,255}$
       in: path
       description: Identifier of the Resource
   schemas:
@@ -310,7 +318,7 @@ components:
           type: string
           maxLength: 3
           description: Currency code (ISO 4217 format, e.g., GBP, USD, EUR)
-          pattern: '^[A-Z]{3}$'
+          pattern: ^[A-Z]{3}$
     AssessmentRequest:
       description: Base schema for all areas
       type: object
@@ -358,7 +366,7 @@ components:
         id:
           type: string
           maxLength: 255
-          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
+          pattern: ^[A-Za-z0-9\\-_.]{1,255}$
           description: Unique identifier for the connection
         customerEdge:
           $ref: '#/components/schemas/EdgeConnection'
@@ -404,7 +412,7 @@ components:
         location:
           type: string
           maxLength: 2048
-          pattern: '^[A-Za-z0-9\\-_.]{1,2048}$'
+          pattern: ^[A-Za-z0-9\\-_.]{1,2048}$
           description: connection location
     IpAddress:
       type: object
@@ -458,12 +466,12 @@ components:
         serviceId:
           type: string
           maxLength: 255
-          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
+          pattern: ^[A-Za-z0-9\\-_.]{1,255}$
           description: unique id for network service
         serviceName:
           type: string
           maxLength: 255
-          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
+          pattern: ^[A-Za-z0-9\\-_.]{1,255}$
           description: vpn service name
         isProtected:
           type: boolean
@@ -492,12 +500,12 @@ components:
         routeProtocol:
           type: string
           maxLength: 255
-          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
+          pattern: ^[A-Za-z0-9\\-_.]{1,255}$
           description: Routing Protocol used for this network
         resourceGroupId:
           type: string
           maxLength: 255
-          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
+          pattern: ^[A-Za-z0-9\\-_.]{1,255}$
           description: Resource Group Id
         cloudGatewayIp:
           type: string
@@ -511,7 +519,7 @@ components:
         serviceName:
           type: string
           maxLength: 255
-          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
+          pattern: ^[A-Za-z0-9\\-_.]{1,255}$
           description: vpn service name
         isProtected:
           type: boolean
@@ -540,7 +548,7 @@ components:
         routeProtocol:
           type: string
           maxLength: 255
-          pattern: '^[A-Za-z0-9\\-_.]{1,255}$'
+          pattern: ^[A-Za-z0-9\\-_.]{1,255}$
           description: Routing Protocol used for this network
     NetworkUpdate:
       description: Base Network Entity structure for update
@@ -559,6 +567,34 @@ components:
             - A
             - AA
             - AAA
+    XCorrelator:
+      type: string
+      description: Correlator string, UUID format recommended but any string matching the pattern can be used
+      pattern: ^[a-zA-Z0-9-_:;.\/<>{}]{0,256}$
+      maxLength: 256
+      example: b4333c46-49c0-4f62-80d7-f0ef930f1c46
+    ErrorInfo:
+      type: object
+      description: A structured error response providing details about a failed request, including the HTTP status code, an error code, and a human-readable message
+      required:
+        - status
+        - code
+        - message
+      properties:
+        status:
+          type: integer
+          format: int32
+          minimum: 100
+          maximum: 599
+          description: HTTP response status code
+        code:
+          type: string
+          maxLength: 96
+          description: A human-readable code to describe the error
+        message:
+          type: string
+          maxLength: 512
+          description: A human-readable description of what the event represents
   examples:
     siteToCloudVPNFeasibilityAssessmentRequest:
       summary: Assessment Sample 1
@@ -587,7 +623,6 @@ components:
         duration:
           value: 6
           unit: days
-
     siteToCloudVPNFeasibilityAssessmentResponse:
       summary: Assessment Sample 1
       description: Feasibility assessment sample
@@ -624,7 +659,6 @@ components:
         duration:
           value: 6
           unit: days
-
     siteToCloudVPNCreateConnectionResponse:
       summary: Create Connection Sample 1
       description: Create Connection response sample
@@ -658,12 +692,148 @@ components:
         sla: A
   responses:
     Generic400:
-      $ref: "../common/CAMARA_common.yaml#/components/responses/Generic400"
+      description: Bad Request
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ErrorInfo'
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 400
+                  code:
+                    enum:
+                      - INVALID_ARGUMENT
+                      - OUT_OF_RANGE
+          examples:
+            GENERIC_400_INVALID_ARGUMENT:
+              description: Invalid Argument. Generic Syntax Exception
+              value:
+                status: 400
+                code: INVALID_ARGUMENT
+                message: Client specified an invalid argument, request body or query param.
+            GENERIC_400_OUT_OF_RANGE:
+              description: Out of Range. Specific Syntax Exception used when a given field has a pre-defined range or a invalid filter criteria combination is requested
+              value:
+                status: 400
+                code: OUT_OF_RANGE
+                message: Client specified an invalid range.
     Generic401:
-      $ref: "../common/CAMARA_common.yaml#/components/responses/Generic401"
+      description: Unauthorized
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ErrorInfo'
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 401
+                  code:
+                    enum:
+                      - UNAUTHENTICATED
+          examples:
+            GENERIC_401_UNAUTHENTICATED:
+              description: Request cannot be authenticated and a new authentication is required
+              value:
+                status: 401
+                code: UNAUTHENTICATED
+                message: Request not authenticated due to missing, invalid, or expired credentials. A new authentication is required.
     Generic403:
-      $ref: "../common/CAMARA_common.yaml#/components/responses/Generic403"
+      description: Forbidden
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ErrorInfo'
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 403
+                  code:
+                    enum:
+                      - PERMISSION_DENIED
+                      - INVALID_TOKEN_CONTEXT
+          examples:
+            GENERIC_403_PERMISSION_DENIED:
+              description: Permission denied. OAuth2 token access does not have the required scope or when the user fails operational security
+              value:
+                status: 403
+                code: PERMISSION_DENIED
+                message: Client does not have sufficient permissions to perform this action.
+            GENERIC_403_INVALID_TOKEN_CONTEXT:
+              description: Reflect some inconsistency between information in some field of the API and the related OAuth2 Token
+              value:
+                status: 403
+                code: INVALID_TOKEN_CONTEXT
+                message: Request body is not consistent with access token.
     Generic404:
-      $ref: "../common/CAMARA_common.yaml#/components/responses/Generic404"
+      description: Not found
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ErrorInfo'
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 404
+                  code:
+                    enum:
+                      - NOT_FOUND
+                      - IDENTIFIER_NOT_FOUND
+          examples:
+            GENERIC_404_NOT_FOUND:
+              description: Resource is not found
+              value:
+                status: 404
+                code: NOT_FOUND
+                message: The specified resource is not found.
+            GENERIC_404_IDENTIFIER_NOT_FOUND:
+              description: Some identifier cannot be matched to a device
+              value:
+                status: 404
+                code: IDENTIFIER_NOT_FOUND
+                message: Device identifier not found.
     Generic500:
-      $ref: "../common/CAMARA_common.yaml#/components/responses/Generic500"
+      description: Internal Server Error
+      headers:
+        x-correlator:
+          $ref: '#/components/headers/x-correlator'
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ErrorInfo'
+              - type: object
+                properties:
+                  status:
+                    enum:
+                      - 500
+                  code:
+                    enum:
+                      - INTERNAL
+          examples:
+            GENERIC_500_INTERNAL:
+              description: Problem in Server side. Regular Server Exception
+              value:
+                status: 500
+                code: INTERNAL
+                message: Unknown server error. Typically a server bug.

@@ -1,8 +1,8 @@
-Feature: CAMARA MultiPoint VPN API, vwip - Operation getNetwork
+Feature: CAMARA MultiPoint VPN API, v0.1.0-alpha.1 - Operation getNetwork
 
   Background:
     Given an environment at "apiRoot"
-    And the resource "/multi-point-vpn/vwip/networks/{serviceId}"
+    And the resource "/multi-point-vpn/v0.1alpha1/networks/{serviceId}"
     And the header "Authorization" is set to a valid access token
     And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator"
 
