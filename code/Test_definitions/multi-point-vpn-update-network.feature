@@ -1,8 +1,8 @@
-Feature: CAMARA MultiPoint VPN API, v2 - Operation updateNetwork
+Feature: CAMARA MultiPoint VPN API, vwip - Operation updateNetwork
 
   Background:
     Given an environment at "apiRoot"
-    And the resource "/multi-point-vpn/v2/networks/{networkId}"
+    And the resource "/multi-point-vpn/vwip/networks/{networkId}"
     And the header "Content-Type" is set to "application/json"
     And the header "Authorization" is set to a valid access token
     And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator"
