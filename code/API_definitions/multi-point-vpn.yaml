@@ -614,10 +614,10 @@ components:
         - providerEdge
       properties:
         connectionId:
+          description: Unique identifier of the connection assigned by the API provider.
+          readOnly: true
           allOf:
             - $ref: '#/components/schemas/Uuid'
-            - description: Unique identifier of the connection (assigned by the API provider).
-              readOnly: true
         customerEdge:
           $ref: '#/components/schemas/Endpoint'
         providerEdge:
@@ -738,10 +738,10 @@ components:
         - guaranteedBandwidth
       properties:
         networkId:
+          description: Unique identifier of the MultiPoint VPN network assigned by the API provider.
+          readOnly: true
           allOf:
             - $ref: '#/components/schemas/Uuid'
-            - description: Unique identifier of the network (assigned by the API provider).
-              readOnly: true
         name:
           type: string
           maxLength: 100
@@ -788,6 +788,8 @@ components:
         status:
           type: integer
           format: int32
+          minimum: 400
+          maximum: 599
           description: HTTP status code returned along with this error response.
         code:
           type: string
