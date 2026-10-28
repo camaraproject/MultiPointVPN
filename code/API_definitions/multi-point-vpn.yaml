@@ -70,7 +70,7 @@ externalDocs:
   description: Product documentation at CAMARA
   url: 'https://github.com/camaraproject/MultiPointVPN'
 servers:
-  - url: '{apiRoot}/multi-point-vpn/v2'
+  - url: '{apiRoot}/multi-point-vpn/vwip'
     variables:
       apiRoot:
         default: 'http://localhost:9091'
@@ -164,7 +164,7 @@ paths:
                 type: string
                 format: uri
                 maxLength: 2048
-                example: "https://api.example.com/multi-point-vpn/v2/networks/8a2b1c9e-1f4d-4c8a-9b2a-3e5f7a1b2c3d"
+                example: "https://api.example.com/multi-point-vpn/vwip/networks/8a2b1c9e-1f4d-4c8a-9b2a-3e5f7a1b2c3d"
           content:
             application/json:
               schema:
