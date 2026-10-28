@@ -61,11 +61,11 @@ info:
     This API rejects requests with JSON request bodies that contain properties not
     declared in this specification, at any nesting level. Unknown properties result
     in a `400 INVALID_ARGUMENT` response.
-  version: 2.0.0
+  version: wip
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
-  x-camara-commonalities: 0.5
+  x-camara-commonalities: 0.8.0
 externalDocs:
   description: Product documentation at CAMARA
   url: 'https://github.com/camaraproject/MultiPointVPN'
