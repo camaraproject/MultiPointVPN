@@ -1,8 +1,8 @@
-Feature: CAMARA MultiPoint VPN API, vwip - Operation createNetwork
+Feature: CAMARA MultiPoint VPN API, v0.1.0-alpha.1 - Operation createNetwork
 
   Background:
     Given an environment at "apiRoot"
-    And the resource "/multi-point-vpn/vwip/networks"
+    And the resource "/multi-point-vpn/v0.1alpha1/networks"
     And the header "Content-Type" is set to "application/json"
     And the header "Authorization" is set to a valid access token
     And the header "x-correlator" complies with the schema at "#/components/schemas/XCorrelator"

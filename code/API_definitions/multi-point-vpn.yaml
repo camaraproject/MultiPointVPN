@@ -61,7 +61,7 @@ info:
     This API rejects requests with JSON request bodies that contain properties not
     declared in this specification, at any nesting level. Unknown properties result
     in a `400 INVALID_ARGUMENT` response.
-  version: wip
+  version: 0.1.0-alpha.1
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
@@ -70,7 +70,7 @@ externalDocs:
   description: Product documentation at CAMARA
   url: 'https://github.com/camaraproject/MultiPointVPN'
 servers:
-  - url: '{apiRoot}/multi-point-vpn/vwip'
+  - url: '{apiRoot}/multi-point-vpn/v0.1alpha1'
     variables:
       apiRoot:
         default: 'http://localhost:9091'
@@ -164,7 +164,7 @@ paths:
                 type: string
                 format: uri
                 maxLength: 2048
-                example: "https://api.example.com/multi-point-vpn/vwip/networks/8a2b1c9e-1f4d-4c8a-9b2a-3e5f7a1b2c3d"
+                example: "https://api.example.com/multi-point-vpn/v0.1alpha1/networks/8a2b1c9e-1f4d-4c8a-9b2a-3e5f7a1b2c3d"
           content:
             application/json:
               schema:
