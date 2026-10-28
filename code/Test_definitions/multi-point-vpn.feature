@@ -1,7 +1,7 @@
-Feature: CAMARA MultiPoint VPN API v2
+Feature: CAMARA MultiPoint VPN API vwip
 
   Background:
-    Given an environment with CAMARA MultiPoint VPN API v2
+    Given an environment with CAMARA MultiPoint VPN API vwip
     And the request headers contain a valid access token with the required scope
 
   # checkFeasibility - POST /feasibility-check
