@@ -1,4 +1,4 @@
-Feature: CAMARA MultiPoint VPN API, v2 - Connection Operations
+Feature: CAMARA MultiPoint VPN API, vwip - Connection Operations
 
   Background:
     Given an environment at "apiRoot"
@@ -9,7 +9,7 @@ Feature: CAMARA MultiPoint VPN API, v2 - Connection Operations
 
   @multi_point_vpn_listConnections_success_01_list_connections
   Scenario: Successfully list connections of a MultiPoint VPN network
-    Given the resource "/multi-point-vpn/v2/networks/{networkId}/connections"
+    Given the resource "/multi-point-vpn/vwip/networks/{networkId}/connections"
     And the path parameter "networkId" is set to an existing network identifier
     When the request "listConnections" is sent
     Then the response status code is 200
