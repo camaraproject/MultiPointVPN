@@ -92,7 +92,7 @@ The API definition(s) are based on
 
 ### Added
 
-* N/A
+Initial version of the MultiPoint VPN API , enabling an enterprise API consumer to order and manage an on-demand, private multi-point VPN that interconnects several enterprise touchpoints — sites, data centers and clouds — with a guaranteed bandwidth and quality profile. It covers feasibility checking, network creation/retrieval/modification/deletion, and adding/removing connections.
 
 ### Changed
 
